@@ -1,8 +1,6 @@
 package com.example.ecommerce.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Cart {
@@ -22,7 +20,18 @@ public class Cart {
     private String description;
     private Integer price;
     private Double rating;
+   /* @Lob
+    @Column(columnDefinition ="longblob")
+ private Byte[] image;
 
+    public Byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(Byte[] image) {
+        this.image = image;
+    }
+*/
     public String getName() {
         return name;
     }

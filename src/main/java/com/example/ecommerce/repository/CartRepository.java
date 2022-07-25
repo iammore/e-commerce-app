@@ -14,4 +14,6 @@ public interface CartRepository extends JpaRepository<Cart,Long> {
 
     @Transactional
     List<Cart> deleteByNameContaining(String name);
+
+    Cart findOneByNameContaining(String name);
 }

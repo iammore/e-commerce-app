@@ -2,6 +2,8 @@ package com.example.ecommerce.service;
 
 import com.example.ecommerce.model.Cart;
 import com.example.ecommerce.repository.CartRepository;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,10 +11,21 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service @Slf4j
 public class CartServiceImpl implements CartService{
     @Autowired
     CartRepository cartRepository;
+
+    @Override
+    public Cart getOneFromCart(String name) {
+        log.info("finding one product from cart with the name {}", name);
+        try{
+            return cartRepository.findOneByNameContaining(name);
+        }catch (Exception e){
+            log.error(String.valueOf(e.getStackTrace()));
+        }
+     return null;
+    }
 
     @Override
 

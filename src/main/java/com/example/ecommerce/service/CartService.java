@@ -9,6 +9,6 @@ public interface CartService {
 
     Cart saveToCart(Cart cart);
 
-
+Cart getOneFromCart(String name);
     List<Cart> removeFromCart(String name);
 }
