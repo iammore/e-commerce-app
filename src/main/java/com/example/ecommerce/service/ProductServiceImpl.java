@@ -15,6 +15,7 @@ public class ProductServiceImpl implements ProductService{
     ProductRepository productRepository;
     @Override
     public List<Product> getAllProductsByCategory(String category) {
+        log.info("************finding products for category in repository"+category);
         return productRepository.findAllByCategory(category);
     }
 

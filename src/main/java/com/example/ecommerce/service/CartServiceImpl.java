@@ -32,6 +32,7 @@ public class CartServiceImpl implements CartService{
     public List<Cart> removeFromCart(String name) {
         List<Cart> list=new ArrayList<>();
        try{
+
            return cartRepository.deleteByNameContaining(name);
        }catch (Exception e){
            System.out.println(e.getCause());

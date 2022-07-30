@@ -20,6 +20,10 @@ public class Cart {
     private String description;
     private Integer price;
     private Double rating;
+
+    private int count;
+
+    private String username;
    /* @Lob
     @Column(columnDefinition ="longblob")
  private Byte[] image;
@@ -70,5 +74,22 @@ public class Cart {
 
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
