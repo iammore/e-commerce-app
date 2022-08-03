@@ -11,4 +11,6 @@ public interface CartService {
 
 Cart getOneFromCart(String name);
     List<Cart> removeFromCart(String name);
+
+    List<Cart> getCart(String cartOfUser);
 }

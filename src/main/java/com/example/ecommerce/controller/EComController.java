@@ -75,11 +75,25 @@ public class EComController {
         return productService.getAllProductsByName(productName);
     }
     //@CrossOrigin(origins = "http://localhost:3000/getCart", allowedHeaders = {"authorization"})
-    @GetMapping("/getCart/{Bearer}")
+  /*  @GetMapping("/getCart/{Bearer}")
     public ResponseEntity<?> getAllItemsFromCart(){
         if (jwtRequestFilter.isLoggedIn()){
             log.info("*-*-*-*-*-*- updating cart for user "+jwtRequestFilter.getUsername()+"*-*-*-*-*-*-");
             List<Cart> cart=cartService.getCart();
+            return new ResponseEntity<>(cart, HttpStatus.OK);
+        }
+        ErrorResponse errorResponse=new ErrorResponse("User Needs to Login First",new Date(),"you have been logged out");
+        return new ResponseEntity<>(errorResponse,HttpStatus.UNAUTHORIZED);
+
+    }*/
+
+    //get cart for respective user
+  @GetMapping("/getCart/{Bearer}")
+    public ResponseEntity<?> getAllItemsFromCart(){
+        if (jwtRequestFilter.isLoggedIn()){
+            String cartOfUser=jwtRequestFilter.getUsername();
+            log.info("*-*-*-*-*-*- updating cart for user "+cartOfUser+"*-*-*-*-*-*-");
+            List<Cart> cart=cartService.getCart(cartOfUser);
             return new ResponseEntity<>(cart, HttpStatus.OK);
         }
         ErrorResponse errorResponse=new ErrorResponse("User Needs to Login First",new Date(),"you have been logged out");
@@ -94,8 +108,12 @@ public class EComController {
     @PostMapping("/addToCart/{productToAdd}")
     public Cart add2Cart(@PathVariable String productToAdd) throws UnsupportedEncodingException {
         String productName = URLDecoder.decode(productToAdd, "UTF-8");
+        String UserToken="";
+        String UserNameFromToken="";
         if (productName.contains("&&Bearer")){
-            log.info("Bearer token is"+ productName.substring(productName.indexOf("&&Bearer")+9));
+            UserToken= productName.substring(productName.indexOf("&&Bearer")+9);
+            UserNameFromToken=jwtUtilToken.extractUsernmae(UserToken);
+            log.info("user from token is"+ UserNameFromToken);
             productName=productName.substring(0,productName.indexOf("&&Bearer"));
         }
 
@@ -111,6 +129,7 @@ public class EComController {
             cart.setPrice(product.getPrice());
             cart.setRating(product.getRating());
             cart.setCount(cart.getCount()+1);
+            cart.setUsername(UserNameFromToken);
             return cartService.saveToCart(cart);
         }else {
            Cart cart=cartService.getOneFromCart(productName);

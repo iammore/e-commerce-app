@@ -28,7 +28,6 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-
     public List<Cart> removeFromCart(String name) {
         List<Cart> list=new ArrayList<>();
        try{
@@ -38,6 +37,11 @@ public class CartServiceImpl implements CartService{
            System.out.println(e.getCause());
        }
 return null;
+    }
+
+    @Override
+    public List<Cart> getCart(String cartOfUser) {
+        return cartRepository.findAllByUsername(cartOfUser);
     }
 
     @Override
